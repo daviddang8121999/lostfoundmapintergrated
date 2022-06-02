@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">LostFoundMap</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="create_a_new_advert1" />
+    <string name="show_all_lost_found_items1" />
+    <string name="show_on_map" />
+    <string name="post_type_">POST TYPE</string>
+    <string name="name_">NAME</string>
+    <string name="phone_">PHONE</string>
+    <string name="description_">DESCRIPTION</string>
+    <string name="dates_">DATE</string>
+    <string name="location_">LOCATION</string>
+    <string name="type_your_name_here">Type your name here</string>
+    <string name="type_your_phone_number">Type your phone number</string>
+    <string name="description_input">Description input</string>
+    <string name="type_date">Enter date</string>
+    <string name="delete">DELETE</string>
+    <string name="lost_found_items">LOST FOUND ITEMS</string>
+    <string name="Place_API">AIzaSyDgVrITZIEzdTzRCNjmvRZxKr_0ih5-lis</string>
+</resources>
