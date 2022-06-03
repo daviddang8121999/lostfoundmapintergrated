@@ -13,7 +13,7 @@ public class LostFoundMod {
     private Double latitude;
     private Double longitude;
 
-    public LostFoundMod(@Nullable Integer id, String type, String textName, String textPhone,
+    public LostFoundMod(String type, String textName, String textPhone,
                         String textDescription, String textDate, String textLocation,
                         Double latitude, Double longitude) {
         this.id = id;

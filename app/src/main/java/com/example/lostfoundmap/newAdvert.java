@@ -45,6 +45,7 @@ public class newAdvert extends AppCompatActivity {
     Double latitude;
     Double longitude;
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[]permissions, @NonNull int[]grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -71,6 +72,11 @@ public class newAdvert extends AppCompatActivity {
         databaseHelper db = new databaseHelper(this);
         radioGroup = findViewById(R.id.radioGroup);
 
+        locationText.setOnClickListener(view -> {
+            Intent placeIntent = new Intent(newAdvert.this, AutoLocation.class);
+            startActivityForResult(placeIntent, 3);
+        });
+
         Button Post = findViewById(R.id.PostBtn);
         Post.setOnClickListener(view -> {
             int postTypeId = radioGroup.getCheckedRadioButtonId();
@@ -92,7 +98,8 @@ public class newAdvert extends AppCompatActivity {
             date = edDate.getText().toString();
             location = locationText.getText().toString();
 
-            LostFoundMod lostFoundMod = new LostFoundMod(null, type, name, phone, description, date, location, latitude, longitude);
+
+            LostFoundMod lostFoundMod = new LostFoundMod(type, name, phone, description, date, location, latitude, longitude);
 
             Long postData = db.insertLostFound(lostFoundMod);
 

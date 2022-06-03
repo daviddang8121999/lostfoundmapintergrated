@@ -55,7 +55,7 @@ public class databaseHelper extends SQLiteOpenHelper {
         contentValues.put(Ulti.LOCATION, lostFound.getLocation());
         contentValues.put(Ulti.LATITUDE, lostFound.getLatitude());
         contentValues.put(Ulti.LONGITUDE, lostFound.getLongitude());
-        long newRowId = db.insert(Ulti.TABLE_NAME, null, contentValues);
+        long newRowId = db.insertOrThrow(Ulti.TABLE_NAME, null, contentValues);
         db.close();
         return newRowId;
     }
