@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,12 +33,12 @@ public class lostFoundList extends AppCompatActivity {
 
         lView = findViewById(R.id.list);
         lostFoundArrayList = new ArrayList<>();
-        db = new databaseHelper(lostFoundList.this);
 
-        List<LostFoundMod> listView = db.fetchAllItems();
-        for (LostFoundMod lostFoundMod : listView)
+        List<LostFoundMod> listView = MainActivity.db.fetchAllItems();
+        for (int i = 0; i < listView.size(); i++)
         {
-            lostFoundArrayList.add(lostFoundMod.getType() + " " + lostFoundMod.getName());
+            Log.d(null, listView.get(i).getDescription());
+//            lostFoundArrayList.add(lostFoundMod.getType() + " " + lostFoundMod.getName());
         }
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lostFoundArrayList);

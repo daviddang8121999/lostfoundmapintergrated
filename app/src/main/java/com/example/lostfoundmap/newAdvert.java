@@ -8,6 +8,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -42,8 +43,10 @@ public class newAdvert extends AppCompatActivity {
     String description;
     String date;
     String location;
-    Double latitude;
-    Double longitude;
+    private Double latitude;
+    private Double longitude;
+    private Double current_latitude;
+    private Double current_longitude;
 
 
     @Override
@@ -69,7 +72,6 @@ public class newAdvert extends AppCompatActivity {
         EditText edDate = findViewById(R.id.editDate);
         locationText = findViewById(R.id.LocText);
 
-        databaseHelper db = new databaseHelper(this);
         radioGroup = findViewById(R.id.radioGroup);
 
         locationText.setOnClickListener(view -> {
@@ -99,9 +101,9 @@ public class newAdvert extends AppCompatActivity {
             location = locationText.getText().toString();
 
 
-            LostFoundMod lostFoundMod = new LostFoundMod(type, name, phone, description, date, location, latitude, longitude);
+            LostFoundMod lostFoundMod = new LostFoundMod(null , type, name, phone, description, date, location, latitude, longitude);
 
-            Long postData = db.insertLostFound(lostFoundMod);
+            Long postData = MainActivity.db.insertLostFound(lostFoundMod);
 
             if (postData > 0)
                 Toast.makeText(newAdvert.this, "Successful Entry Log", Toast.LENGTH_SHORT).show();
@@ -114,11 +116,24 @@ public class newAdvert extends AppCompatActivity {
         });
 
         getDirectionsButton = findViewById(R.id.LocBtn);
-        getDirectionsButton.setOnClickListener(view -> locationText.setText(current_location));
+        getDirectionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                locationText.setText("current location");
+                latitude = current_latitude;
+                longitude = current_longitude;
+            }
+        });
 
 
         locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-        locationListener = location -> current_location = location.toString();
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                current_latitude = location.getLatitude();
+                current_longitude = location.getLongitude();
+            }
+        };
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -147,6 +162,7 @@ public class newAdvert extends AppCompatActivity {
                 longitude = data.getDoubleExtra("longitude", 0);
                 String name = data.getStringExtra("name");
                 locationText.setText(name);
+
             }
         }
 

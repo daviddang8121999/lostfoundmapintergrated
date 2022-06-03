@@ -9,14 +9,14 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static databaseHelper databaseHelper = null;
+    public static databaseHelper db = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        databaseHelper = new databaseHelper(getApplicationContext());
+        db = new databaseHelper(getApplicationContext());
 
         Button newAdvert = findViewById(R.id.NewBtn);
         newAdvert.setOnClickListener(view -> createNewAdvert());

@@ -46,7 +46,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        ArrayList<LostFoundMod> lostFoundData = MainActivity.databaseHelper.fetchAllItems();
+        ArrayList<LostFoundMod> lostFoundData = MainActivity.db.fetchAllItems();
         for (int i = 0; i < lostFoundData.size(); i++){
             LatLng location = new LatLng(lostFoundData.get(i).getLatitude(), lostFoundData.get(i).getLongitude());
             if (i ==0)

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -30,7 +31,7 @@ public class databaseHelper extends SQLiteOpenHelper {
                 + Ulti.TYPE + " TEXT, "
                 + Ulti.NAME + " TEXT, " + Ulti.PHONE + " TEXT, "
                 + Ulti.DESCRIPTION + " TEXT, " + Ulti.DATE + " TEXT, "
-                + Ulti.LOCATION + " TEXT, " + Ulti.LATITUDE + " REAL, " + Ulti.LONGITUDE + " REAL );";
+                + Ulti.LOCATION + " TEXT, " + Ulti.LATITUDE + " REAL, " + Ulti.LONGITUDE + " REAL )";
         sqLiteDatabase.execSQL(CREATE_LOST_FOUND_TABLE);
     }
 
@@ -65,28 +66,34 @@ public class databaseHelper extends SQLiteOpenHelper {
         ArrayList<LostFoundMod> LostFoundList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectAll = " SELECT * FROM " + Ulti.TABLE_NAME;
-        Cursor cursor = db.rawQuery(selectAll, null);
 
-        if (cursor.moveToFirst())
-        {
-            do {
-                LostFoundMod lostFound = new LostFoundMod();
-
-                lostFound.setId(cursor.getInt(0));
-                lostFound.setType((cursor.getString(1)));
-                lostFound.setName((cursor.getString(2)));
-                lostFound.setPhone((cursor.getString(3)));
-                lostFound.setDescription((cursor.getString(4)));
-                lostFound.setDate((cursor.getString(5)));
-                lostFound.setLocation((cursor.getString(6)));
-                lostFound.setLatitude((cursor.getDouble(7)));
-                lostFound.setLongitude((cursor.getDouble(8)));
-
-                LostFoundList.add(lostFound);
-            }
-            while (cursor.moveToNext());
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Ulti.TABLE_NAME, null);
+try {
+    if (cursor.moveToFirst()) {
+        do {
+            LostFoundList.add(new LostFoundMod(
+                    cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getString(5),
+                    cursor.getString(6),
+                    cursor.getDouble(7),
+                    cursor.getDouble(8)
+            ));
         }
+        while (cursor.moveToNext());
+    }
+}
+catch (Exception e){e.printStackTrace();}
+finally {
+    db.close();
+}
+        if (LostFoundList.size() == 0)
+            Log.d(null, "list is null");
+        else
+            Log.d(null, "list is not null");
         return LostFoundList;
     }
 
@@ -97,4 +104,5 @@ public class databaseHelper extends SQLiteOpenHelper {
                 + Ulti.PHONE + " = '" + phone + "' AND " + Ulti.DATE + "= '" + date + "'");
     }
 }
+
 
