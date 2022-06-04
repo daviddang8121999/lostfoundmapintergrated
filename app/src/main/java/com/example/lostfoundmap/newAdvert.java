@@ -101,7 +101,7 @@ public class newAdvert extends AppCompatActivity {
             location = locationText.getText().toString();
 
 
-            LostFoundMod lostFoundMod = new LostFoundMod(null , type, name, phone, description, date, location, latitude, longitude);
+            LostFoundMod lostFoundMod = new LostFoundMod(null , radType, name, phone, description, date, location, latitude, longitude);
 
             Long postData = MainActivity.db.insertLostFound(lostFoundMod);
 

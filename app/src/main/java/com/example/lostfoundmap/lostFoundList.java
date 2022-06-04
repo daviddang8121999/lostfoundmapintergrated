@@ -21,9 +21,9 @@ import java.util.List;
 
 public class lostFoundList extends AppCompatActivity {
     ListView lView;
-    databaseHelper db;
     ArrayList<String> lostFoundArrayList;
     ArrayAdapter<String> adapter;
+    databaseHelper db;
 
 
     @Override
@@ -34,11 +34,11 @@ public class lostFoundList extends AppCompatActivity {
         lView = findViewById(R.id.list);
         lostFoundArrayList = new ArrayList<>();
 
+
         List<LostFoundMod> listView = MainActivity.db.fetchAllItems();
-        for (int i = 0; i < listView.size(); i++)
+        for (LostFoundMod lostFoundMod : listView)
         {
-            Log.d(null, listView.get(i).getDescription());
-//            lostFoundArrayList.add(lostFoundMod.getType() + " " + lostFoundMod.getName());
+            lostFoundArrayList.add(lostFoundMod.getType() + " " + lostFoundMod.getName());
         }
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lostFoundArrayList);
